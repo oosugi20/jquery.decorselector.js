@@ -21,10 +21,20 @@ Module = function (element, options) {
 	 * init
 	 */
 	fn.init = function () {
+		var _this = this;
 		this._prepareElms();
 		this._eventify();
 		this._updateSelected();
 		this.$currentSelected = this.$selected;
+		this.width = (function () {
+			var w = 0;
+			_this.$item.each(function () {
+				w = Math.max(w, $(this).width());
+			});
+			return w;
+		})();
+		this.$result.width(this.width);
+		this._closeList();
 	};
 
 	/**
@@ -46,7 +56,7 @@ Module = function (element, options) {
 		});
 		list += '</ul>';
 
-		this.$list = $(list).appendTo(this.$wrap).hide();
+		this.$list = $(list).appendTo(this.$wrap);
 		this.$item = this.$list.find('.ui-decorselector-item');
 	};
 
@@ -75,14 +85,20 @@ Module = function (element, options) {
 					//..
 					break;
 				case arrow.up:
-					_this.$selected.attr('selected', false);
-					_this.$selected.prev().attr('selected', true);
-					_this._updateSelected();
+					e.preventDefault();
+					if (_this.$list.is(':hidden')) {
+						_this._openList();
+					} else {
+						_this.$selected.attr('selected', false);
+						_this.$selected.prev().attr('selected', true);
+						_this._updateSelected();
+					}
 					break;
 				case arrow.right:
 					//..
 					break;
 				case arrow.down:
+					e.preventDefault();
 					if (_this.$list.is(':hidden')) {
 						_this._openList();
 					} else {
@@ -93,6 +109,15 @@ Module = function (element, options) {
 					break;
 				case 27: // Esc
 					if (_this.$list.is(':visible')) {
+						_this.$selected.attr('selected', false);
+						_this.$currentSelected.attr('selected', true);
+						_this._updateSelected();
+						_this._closeList();
+					}
+					break;
+				case 9: // Tab
+					if (_this.$list.is(':visible')) {
+						e.preventDefault();
 						_this.$selected.attr('selected', false);
 						_this.$currentSelected.attr('selected', true);
 						_this._updateSelected();
@@ -112,10 +137,6 @@ Module = function (element, options) {
 		});
 		this.$item.on('focus', 'a', function (e) {
 			_this._closeList();
-		});
-
-		this.$el.on('change', function () {
-			console.log('change');
 		});
 	};
 
