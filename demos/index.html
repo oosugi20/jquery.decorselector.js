@@ -8,6 +8,9 @@
 <style>
 [data-decorselector] {
 }
+.ui-decorselector-item.selected {
+	background: #FFC;
+}
 </style>
 <script>
 $(function () {
@@ -17,6 +20,10 @@ $(function () {
 </head>
 
 <body>
-<div data-decorselector></div>
+<select data-decorselector>
+<option value="value1">hoge</option>
+<option value="value2" selected>fuga</option>
+<option value="value3">guha</option>
+</select>
 </body>
 </html>
