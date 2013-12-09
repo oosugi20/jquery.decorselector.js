@@ -34,7 +34,7 @@ Module = function (element, options) {
 			return w;
 		})();
 		this.$result.width(this.width);
-		this._closeList();
+		this.$list.hide();
 	};
 
 	/**
