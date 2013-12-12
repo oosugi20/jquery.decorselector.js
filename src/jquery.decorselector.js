@@ -35,6 +35,7 @@ Module = function (element, options) {
 			return w;
 		})();
 		this.$result.width(this.width);
+		this.$list.find('.ui-decorselector-label').width(this.width);
 		this.$list.hide();
 	};
 
