@@ -62,7 +62,7 @@ Module = function (element, options) {
 				var $this = $(this);
 				list += '<li class="ui-decorselector-group">';
 				list += '<dfn class="ui-decorselector-label">' + $this.attr('label') + '</dfn>';
-				list += '<ul class="ui-decorselector-list2">';
+				list += '<ul class="ui-decorselector-groupitems">';
 				$this.find('option').each(function () {
 					var $opt = $(this);
 					list += '<li class="ui-decorselector-item" data-decorselector-value="' + $opt.val() + '"><a href="#">' + $opt.text() + '</a></li>';
