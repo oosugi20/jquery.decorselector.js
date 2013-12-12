@@ -1,7 +1,7 @@
 /*! jquery.decorselector.js (git@github.com:oosugi20/jquery.decorselector.js.git)
 * 
  * lastupdate: 2013-12-12
- * version: 0.2.0
+ * version: 0.2.1
  * author: Makoto OOSUGI <oosugi20@gmail.com>
  * License: MIT
  */
@@ -42,6 +42,7 @@ Module = function (element, options) {
 			return w;
 		})();
 		this.$result.width(this.width);
+		this.$list.find('.ui-decorselector-label').width(this.width);
 		this.$list.hide();
 	};
 
@@ -69,7 +70,7 @@ Module = function (element, options) {
 				var $this = $(this);
 				list += '<li class="ui-decorselector-group">';
 				list += '<dfn class="ui-decorselector-label">' + $this.attr('label') + '</dfn>';
-				list += '<ul class="ui-decorselector-list2">';
+				list += '<ul class="ui-decorselector-groupitems">';
 				$this.find('option').each(function () {
 					var $opt = $(this);
 					list += '<li class="ui-decorselector-item" data-decorselector-value="' + $opt.val() + '"><a href="#">' + $opt.text() + '</a></li>';
