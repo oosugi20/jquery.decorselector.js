@@ -1,7 +1,7 @@
 /*! jquery.decorselector.js (git@github.com:oosugi20/jquery.decorselector.js.git)
 * 
  * lastupdate: 2013-12-12
- * version: 0.2.1
+ * version: 0.2.2
  * author: Makoto OOSUGI <oosugi20@gmail.com>
  * License: MIT
  */
@@ -165,6 +165,12 @@ Module = function (element, options) {
 			}
 		});
 		this.$item.on('focus', 'a', function (e) {
+			_this._closeList();
+		});
+		this.$wrap.on('click', function (e) {
+			e.stopPropagation();
+		});
+		$(document).on('click', function (e) {
 			_this._closeList();
 		});
 	};
