@@ -20,10 +20,28 @@ $(function () {
 </head>
 
 <body>
+<h1>jquery.decorselector.js</h1>
+
+<h2>normal</h2>
 <select data-decorselector>
 <option value="value1">hoge</option>
 <option value="value2" selected>fuga</option>
 <option value="value3">guha</option>
+</select>
+
+
+<h2>with optgroup</h2>
+<select data-decorselector>
+<optgroup label="label1">
+<option value="value1">hoge</option>
+<option value="value2" selected>fuga</option>
+<option value="value3">guha</option>
+</optgroup>
+<optgroup label="label2">
+<option value="value21">hoge2</option>
+<option value="value22">fuga2</option>
+<option value="value23">guha2</option>
+</optgroup>
 </select>
 </body>
 </html>

@@ -23,6 +23,7 @@ Module = function (element, options) {
 	fn.init = function () {
 		var _this = this;
 		this._prepareElms();
+		this._createVirtualList();
 		this._eventify();
 		this._updateSelected();
 		this.$currentSelected = this.$selected;
@@ -47,14 +48,34 @@ Module = function (element, options) {
 		this.$result = $('<span class="ui-decorselector-result"/>').appendTo(this.$results);
 		this.$arrow = $('<span class="ui-decorselector-arrow">↓</span>').appendTo(this.$results);
 		this.$results.appendTo(this.$wrap);
+	};
 
-		// create virtual list
+	/**
+	 * _createVirtualList
+	 */
+	fn._createVirtualList = function () {
+		var hasOptgroup = !!(this.$el.has('optgroup').length);
 		var list = '<ul class="ui-decorselector-list">';
-		this.$el.find('option').each(function () {
-			var $this = $(this);
-			list += '<li class="ui-decorselector-item" data-decorselector-value="' + $this.val() + '"><a href="#">' + $this.text() + '</a></li>';
-		});
-		list += '</ul>';
+
+		if (hasOptgroup) {
+			this.$el.find('optgroup').each(function () {
+				var $this = $(this);
+				list += '<li class="ui-decorselector-group">';
+				list += '<dfn class="ui-decorselector-label">' + $this.attr('label') + '</dfn>';
+				list += '<ul class="ui-decorselector-list2">';
+				$this.find('option').each(function () {
+					var $opt = $(this);
+					list += '<li class="ui-decorselector-item" data-decorselector-value="' + $opt.val() + '"><a href="#">' + $opt.text() + '</a></li>';
+				});
+				list += '</ul></li>';
+			});
+		} else {
+			this.$el.find('option').each(function () {
+				var $this = $(this);
+				list += '<li class="ui-decorselector-item" data-decorselector-value="' + $this.val() + '"><a href="#">' + $this.text() + '</a></li>';
+			});
+			list += '</ul>';
+		}
 
 		this.$list = $(list).appendTo(this.$wrap);
 		this.$item = this.$list.find('.ui-decorselector-item');
