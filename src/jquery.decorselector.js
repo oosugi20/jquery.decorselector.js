@@ -160,6 +160,12 @@ Module = function (element, options) {
 		this.$item.on('focus', 'a', function (e) {
 			_this._closeList();
 		});
+		this.$wrap.on('click', function (e) {
+			e.stopPropagation();
+		});
+		$(document).on('click', function (e) {
+			_this._closeList();
+		});
 	};
 
 	/**
