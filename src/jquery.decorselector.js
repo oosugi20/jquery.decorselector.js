@@ -164,7 +164,7 @@ Module = function (element, options) {
 			e.stopPropagation();
 		});
 		$(document).on('click', function (e) {
-			_this._closeList();
+			_this.$list.hide();
 		});
 	};
 
