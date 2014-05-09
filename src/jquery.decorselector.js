@@ -99,7 +99,12 @@ Module = function (element, options) {
 	 */
 	fn._eventify = function () {
 		var _this = this;
-		this.$wrap.on('click', '.ui-decorselector-results', $.proxy(this._toggleList, this));
+		this.$wrap.on('click', '.ui-decorselector-results', function (e) {
+			e.preventDefault();
+			if (!_this.$el.prop('disabled')) {
+				_this._toggleList();
+			}
+		});
 		this.$wrap.on('click', '.ui-decorselector-item a', function (e) {
 			var $item = $(this).parent();
 			e.preventDefault();
