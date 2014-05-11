@@ -193,8 +193,10 @@ Module = function (element, options) {
 			e.stopPropagation();
 		});
 		$(document).on('click', function (e) {
-			_this.$list.hide();
-			_this.$wrap.removeClass('opened');
+			if (_this.$list.is(':visible')) {
+				_this.$list.hide();
+				_this.$wrap.removeClass('opened');
+			}
 		});
 	};
 
