@@ -186,9 +186,6 @@ Module = function (element, options) {
 					break;
 			}
 		});
-		this.$item.on('focus', 'a', function (e) {
-			_this._closeList();
-		});
 		this.$wrap.on('click', function (e) {
 			e.stopPropagation();
 		});
