@@ -127,7 +127,7 @@ Module = function (element, options) {
 					e.preventDefault();
 					if (_this.$list.is(':hidden')) {
 						_this._openList();
-					} else {
+					} else if (_this.$selected.prev().length) {
 						_this.$selected.attr('selected', false);
 						_this.$selected.prev().attr('selected', true);
 						_this._updateSelected();
@@ -140,7 +140,7 @@ Module = function (element, options) {
 					e.preventDefault();
 					if (_this.$list.is(':hidden')) {
 						_this._openList();
-					} else {
+					} else if (_this.$selected.next().length) {
 						_this.$selected.attr('selected', false);
 						_this.$selected.next().attr('selected', true);
 						_this._updateSelected();
