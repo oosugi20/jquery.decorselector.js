@@ -1,7 +1,7 @@
 /*! jquery.decorselector.js (git@github.com:oosugi20/jquery.decorselector.js.git)
 * 
- * lastupdate: 2013-12-17
- * version: 0.2.3
+ * lastupdate: 2014-05-11
+ * version: 0.2.5
  * author: Makoto OOSUGI <oosugi20@gmail.com>
  * License: MIT
  */
@@ -31,6 +31,7 @@ Module = function (element, options) {
 		var _this = this;
 		this._prepareElms();
 		this._createVirtualList();
+		this.controllDisabled();
 		this._eventify();
 		this._updateSelected();
 		this.$currentSelected = this.$selected;
@@ -90,11 +91,27 @@ Module = function (element, options) {
 	};
 
 	/**
+	 * controllDisabled
+	 */
+	fn.controllDisabled = function () {
+		if (this.$el.prop('disabled')) {
+			this.$wrap.addClass('disabled');
+		} else {
+			this.$wrap.removeClass('disabled');
+		}
+	};
+
+	/**
 	 * _eventify
 	 */
 	fn._eventify = function () {
 		var _this = this;
-		this.$wrap.on('click', '.ui-decorselector-results', $.proxy(this._toggleList, this));
+		this.$wrap.on('click', '.ui-decorselector-results', function (e) {
+			e.preventDefault();
+			if (!_this.$el.prop('disabled')) {
+				_this._toggleList();
+			}
+		});
 		this.$wrap.on('click', '.ui-decorselector-item a', function (e) {
 			var $item = $(this).parent();
 			e.preventDefault();
@@ -164,14 +181,26 @@ Module = function (element, options) {
 					break;
 			}
 		});
-		this.$item.on('focus', 'a', function (e) {
-			_this._closeList();
+		this.$results.on('focus blur', function (e) {
+			switch (e.type) {
+				case 'focus':
+					_this.$wrap.removeClass('blur');
+					_this.$wrap.addClass('focus');
+					break;
+				case 'blur':
+					_this.$wrap.removeClass('focus');
+					_this.$wrap.addClass('blur');
+					break;
+			}
 		});
 		this.$wrap.on('click', function (e) {
 			e.stopPropagation();
 		});
 		$(document).on('click', function (e) {
-			_this.$list.hide();
+			if (_this.$list.is(':visible')) {
+				_this.$list.hide();
+				_this.$wrap.removeClass('opened');
+			}
 		});
 	};
 
@@ -185,6 +214,11 @@ Module = function (element, options) {
 		this.$item.removeClass('selected');
 		this.$item.filter('[data-decorselector-value="' + this._selectedValue + '"]').addClass('selected').find('a');
 		this.$result.text(this._selectedText);
+		if (this._selectedValue) {
+			this.$wrap.addClass('selected');
+		} else {
+			this.$wrap.removeClass('selected');
+		}
 	};
 
 
@@ -194,6 +228,7 @@ Module = function (element, options) {
 	fn._openList = function () {
 		this.$list.show();
 		this.$results.focus();
+		this.$wrap.addClass('opened');
 	};
 
 	/**
@@ -202,6 +237,7 @@ Module = function (element, options) {
 	fn._closeList = function () {
 		this.$list.hide();
 		this.$results.focus();
+		this.$wrap.removeClass('opened');
 	};
 
 	/**
